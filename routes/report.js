@@ -14,22 +14,27 @@ router.get('/', fileList.getList, (req, res)=>{
 
 /* Get report */
 var agvReport = require('../api/agvreport');
-router.get('/GET/file/:file/', (req, res)=>{
+router.get('/GET/file/:file', (req, res)=>{
     console.log('Report file: ' + req.params.file);
     const file = './uploads/report/' + req.params.file;
-    let report = new agvReport(file);
+    const report = new agvReport(file);
     report.getAll(()=> {
         res.json(report.figure);
     })
 });
 
 /* Delete file */
-router.get('/DELETE/file/:file/', (req, res)=>{
+const fileDelete = require('../api/filedelete');
+router.get('/DELETE/file/:file', (req, res, next)=>{
+    console.log(req.params);
     console.log('Delete file: ' + req.params.file);
     const file = './uploads/report/' + req.params.file;
-    res.send(JSON.stringify({
-        result: true,
-    }));
-});
+    fileDelete.remove(file);
+    next();
+    },
+    (res, req)=>{
+        req.redirect('/report');
+    });
+
 
 module.exports = router;

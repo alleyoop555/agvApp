@@ -1,8 +1,10 @@
 <br>
-<h2>File List</h2>
-<select class="custom-select custom-select-lg mb-3" id="file">
-    <option selected value="0">Open this select menu</option>
+<form id="form">
+    <h2>File List</h2>
+    <select class="custom-select custom-select-lg mb-3" id="file" name="file">
+        <option selected value="0">Open this select menu</option>
         <% for (let idx in list) { %>
-                <option value="1"> <%= list[idx] %> </option>
+            <option value="1"> <%= list[idx] %> </option>
         <% } %>
-</select>
+    </select>
+</form>
