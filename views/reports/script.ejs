@@ -1,26 +1,2 @@
-<script >
-    /* report button */
-    function report() {
-        const e = document.getElementById('file');
-        const file = e.options[e.selectedIndex].text;
-        const value = e.options[e.selectedIndex].value;
-        if (value==1) {
-            document.getElementById('fileName').textContent = file;
-            $.ajax({
-                data: {
-                    file: file,
-                },
-                url: '/report/' + file + '/report',
-                type: 'post',
-                cache: false,
-                timeout: 3000,
-                dataType: 'json',
-                success: ()=>{
-                    alert('success');
-                }, error: ()=>{
-                    alert('failed');
-                }
-            })
-        }
-    }
-</script>
+<script src="javascripts/report/reportbutton.js"></script>
+<script src="javascripts/report/deletebutton.js"></script>

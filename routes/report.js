@@ -12,11 +12,24 @@ router.get('/', fileList.getList, (req, res)=>{
     })
 });
 
-router.post('/:file/report', (req, res)=>{
-    console.log(JSON.stringify(req.body));
-    res.json({
-        result: true,
+/* Get report */
+var agvReport = require('../api/agvreport');
+router.get('/GET/file/:file/', (req, res)=>{
+    console.log('Report file: ' + req.params.file);
+    const file = './uploads/report/' + req.params.file;
+    let report = new agvReport(file);
+    report.getAll(()=> {
+        res.json(report.figure);
     })
+});
+
+/* Delete file */
+router.get('/DELETE/file/:file/', (req, res)=>{
+    console.log('Delete file: ' + req.params.file);
+    const file = './uploads/report/' + req.params.file;
+    res.send(JSON.stringify({
+        result: true,
+    }));
 });
 
 module.exports = router;
