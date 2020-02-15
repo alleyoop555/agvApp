@@ -1,6 +1,6 @@
 function remove() {
-    const form = document.getElementById('form');
-    const e = document.getElementById('file');
+    const form = document.getElementById('dbform');
+    const e = document.getElementById('dbfile');
     const file = e.options[e.selectedIndex].text;
     const value = e.options[e.selectedIndex].value;
     if (value == 1) {

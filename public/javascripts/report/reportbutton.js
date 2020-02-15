@@ -1,5 +1,5 @@
 function report() {
-    const e = document.getElementById('file');
+    const e = document.getElementById('dbfile');
     const file = e.options[e.selectedIndex].text;
     const value = e.options[e.selectedIndex].value;
     let obj;
