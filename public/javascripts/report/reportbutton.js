@@ -4,7 +4,10 @@ function report() {
     const value = e.options[e.selectedIndex].value;
     let obj;
     if (value == 1) {
-        document.getElementById('fileName').textContent = file;
+        const span = document.querySelectorAll('span[id="fileName"]');
+        for (let i = 0; i < span.length; i++) {
+            span[i].textContent = file;
+        }
         $.ajax({
             data: {
                 file: file,
@@ -15,7 +18,6 @@ function report() {
             timeout: 3000,
             dataType: 'json',
             success: (data) => {
-                alert('success');
                 obj = data;
             }, error: () => {
                 alert('failed');
@@ -31,6 +33,32 @@ function report() {
                     xAxis: {type: 'category'},
                     yAxis: {},
                     series: obj.dateSeries
+                };
+                myChart.setOption(option);
+
+                myChart = echarts.init(document.getElementById('agv_report'));
+                option = {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    },
+                    legend: {data: obj.allStatus},
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: [
+                        {
+                            type: 'category',
+                            data: obj.allAgv,
+                        }
+                    ],
+                    yAxis: [{type: 'value'}],
+                    series: obj.agvSeries
                 };
                 myChart.setOption(option);
             }

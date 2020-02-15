@@ -1,13 +1,19 @@
 <br>
-<form id="dbform">
-    <h2>File List</h2>
-    <select class="custom-select custom-select-lg mb-3" id="dbfile" name="dbfile">
-        <option selected value="0">Open this select menu</option>
-        <% for (let idx in list) { %>
-            <option value="1"> <%= list[idx] %> </option>
-        <% } %>
-    </select>
-</form>
+
+<div class="container">
+    <div class="align-items-center">
+        <form id="dbform">
+            <h2>File List</h2>
+            <select class="custom-select custom-select-lg mb-3" id="dbfile" name="dbfile">
+                <option selected value="0">Open this select menu</option>
+                <% for (let idx in list) { %>
+                    <option value="1"> <%= list[idx] %> </option>
+                <% } %>
+            </select>
+        </form>
+    </div>
+</div>
+
 
 <form id="myform" method="post" action="/report/POST/myfile" enctype="multipart/form-data">
     <input id='myfile' name="myfile" type='file' hidden/>
