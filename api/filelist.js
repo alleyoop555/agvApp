@@ -1,9 +1,9 @@
 const fs = require('fs');
 
-exports.getList = function (req, res, next) {
-    exports.list = [];
-    fs.readdirSync(exports.folder).forEach(file => {
-        exports.list.push(file);
+exports.getList = function (folder) {
+    let list = [];
+    fs.readdirSync(folder).forEach(file => {
+        list.push(file);
     });
-    next();
+    return list
 };

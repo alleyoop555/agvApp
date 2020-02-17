@@ -1,21 +1,27 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const multer = require('multer');
 
-/* Get file list of the folder */
-var fileList = require('../api/filelist');
-fileList.folder = './uploads/report';
-
 /* GET report page. */
-router.get('/', fileList.getList, (req, res)=>{
-    res.render('report', {
-        list: fileList.list,
-    })
+const fileList = require('../api/filelist');
+const folder = './uploads/report';
+router.get('/', (req, res)=>{
+    let list = fileList.getList(folder);
+    res.render('report', {list: list})
 });
 
-/* Get report */
-var agvReport = require('../api/agvreport');
-router.get('/GET/file/:file', (req, res)=> {
+/* Get file list */
+router.get('/api/filelist', (req, res)=>{
+    console.log('----------');
+    console.log('Get file list');
+    let list = fileList.getList(folder);
+    res.json({list: list})
+});
+
+/* Report file */
+const agvReport = require('../api/agvreport');
+router.get('/api/report/:file', (req, res)=> {
+    console.log('----------')
     console.log('Report file: ' + req.params.file);
     const file = './uploads/report/' + req.params.file;
     const report = new agvReport(file);
@@ -28,24 +34,22 @@ const storage = multer.diskStorage({
     filename: function (req, file, cb) {cb(null, file.originalname)}
 });
 const upload = multer({ storage: storage });
-router.post('/POST/myfile/', upload.single('myfile'),
+router.post('/api/upload', upload.single('uploadfile'),
     (req, res)=> {
-    console.log(req.file);
-    res.redirect('/report');
+    console.log('----------');
+    console.log(`Upload file: ${req.file.filename}`);
+    res.json({result: true})
 });
 
 
 /* Delete file */
 const fileDelete = require('../api/filedelete');
-router.get('/DELETE/file/:file', (req, res, next)=> {
-    console.log(req.params);
+router.get('/api/delete/:file', (req, res)=> {
+    console.log('----------');
     console.log('Delete file: ' + req.params.file);
     const file = './uploads/report/' + req.params.file;
     fileDelete.remove(file);
-    next();
-    },
-    (req, res)=> {
-        res.redirect('/report');
+    res.json({result: true});
     });
 
 

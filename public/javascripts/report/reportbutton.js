@@ -2,6 +2,7 @@ function report() {
     const e = document.getElementById('dbfile');
     const file = e.options[e.selectedIndex].text;
     const value = e.options[e.selectedIndex].value;
+    const figures = document.getElementById('figures');
     let obj;
     if (value == 1) {
         const span = document.querySelectorAll('span[id="fileName"]');
@@ -12,16 +13,12 @@ function report() {
             data: {
                 file: file,
             },
-            url: '/report/GET/file/' + file,
+            url: '/report/api/report/' + file,
             type: 'get',
-            cache: false,
             timeout: 3000,
             dataType: 'json',
             success: (data) => {
                 obj = data;
-            }, error: () => {
-                alert('failed');
-            }, complete: () => {
                 let myChart = echarts.init(document.getElementById('date_report'));
                 let option = {
                     legend: {},
@@ -61,7 +58,10 @@ function report() {
                     series: obj.agvSeries
                 };
                 myChart.setOption(option);
-            }
+                figures.removeAttribute('hidden');
+            }, error: () => {
+                alert('failed');
+            },
         })
     }
 }
